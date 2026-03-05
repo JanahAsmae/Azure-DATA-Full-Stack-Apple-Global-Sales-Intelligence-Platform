@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Architecture Azure – ElectroTrend</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --bg2: #0f1526;
+    --grid: rgba(255,255,255,0.03);
+    --blue: #2563eb;
+    --blue-light: #3b82f6;
+    --cyan: #06b6d4;
+    --orange: #f97316;
+    --purple: #8b5cf6;
+    --green: #10b981;
+    --yellow: #f59e0b;
+    --red: #ef4444;
+    --white: #f1f5f9;
+    --muted: #64748b;
+    --border: rgba(255,255,255,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 60px;
+    animation: fadeDown 0.8s ease both;
+  }
+
+  .header .badge {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--cyan);
+    border: 1px solid var(--cyan);
+    padding: 4px 14px;
+    border-radius: 2px;
+    margin-bottom: 16px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .header h1 {
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    background: linear-gradient(135deg, var(--white) 0%, var(--cyan) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .header p {
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 15px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* Pipeline container */
+  .pipeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* Row */
+  .row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .row:nth-child(1) { animation-delay: 0.1s; }
+  .row:nth-child(2) { animation-delay: 0.2s; }
+  .row:nth-child(3) { animation-delay: 0.3s; }
+  .row:nth-child(4) { animation-delay: 0.4s; }
+  .row:nth-child(5) { animation-delay: 0.5s; }
+  .row:nth-child(6) { animation-delay: 0.6s; }
+  .row:nth-child(7) { animation-delay: 0.7s; }
+
+  /* Service card */
+  .service {
+    position: relative;
+    width: 180px;
+    min-height: 120px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 14px;
+    background: var(--bg2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .service:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent, var(--cyan));
+    box-shadow: 0 0 30px -5px var(--accent, var(--cyan));
+  }
+
+  .service.active {
+    border-color: var(--accent, var(--cyan));
+    box-shadow: 0 0 40px -8px var(--accent, var(--cyan));
+  }
+
+  .service .icon {
+    font-size: 32px;
+    line-height: 1;
+  }
+
+  .service .name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .service .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--accent, var(--cyan));
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border: 1px solid var(--accent, var(--cyan));
+    padding: 2px 8px;
+    border-radius: 2px;
+    opacity: 0.8;
+  }
+
+  .service .glow {
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    background: radial-gradient(ellipse at center, var(--accent, var(--cyan))15, transparent 70%);
+    pointer-events: none;
+  }
+
+  .service:hover .glow { opacity: 0.05; }
+
+  /* Colors per service */
+  .s-blob    { --accent: #06b6d4; }
+  .s-adf     { --accent: #f97316; }
+  .s-ssis    { --accent: #8b5cf6; }
+  .s-sql     { --accent: #3b82f6; }
+  .s-synapse { --accent: #a855f7; }
+  .s-ssas    { --accent: #f59e0b; }
+  .s-pbi     { --accent: #f59e0b; }
+  .s-source  { --accent: #10b981; }
+
+  /* Arrows */
+  .arrow-v {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 48px;
+    width: 180px;
+    flex-shrink: 0;
+  }
+
+  .arrow-v svg {
+    display: block;
+  }
+
+  .arrow-h {
+    display: flex;
+    align-items: center;
+    width: 60px;
+    flex-shrink: 0;
+  }
+
+  .arrow-h svg { display: block; width: 100%; }
+
+  /* Multi-service row */
+  .multi {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    justify-content: center;
+  }
+
+  .multi-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Step label */
+  .step-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  /* Info panel */
+  .info-panel {
+    position: fixed;
+    right: -420px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 380px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 100;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  .info-panel.open { right: 20px; }
+
+  .info-panel h3 {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    color: var(--panel-color, var(--cyan));
+  }
+
+  .info-panel .panel-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--panel-color, var(--cyan));
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .info-panel p {
+    font-size: 13px;
+    color: #94a3b8;
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .info-panel ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .info-panel ul li {
+    font-size: 12px;
+    color: #94a3b8;
+    padding-left: 16px;
+    position: relative;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .info-panel ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--panel-color, var(--cyan));
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .close-btn:hover { border-color: var(--white); color: var(--white); }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+    animation: fadeUp 0.8s ease 0.8s both;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-family: 'Space Mono', monospace;
+    color: var(--muted);
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  /* Tooltip */
+  .hint {
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 32px;
+    letter-spacing: 1px;
+    animation: pulse 2s ease infinite;
+  }
+
+  /* Wide service */
+  .service.wide {
+    width: 240px;
+  }
+
+  /* DWH block */
+  .dwh-block {
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: 16px;
+    padding: 20px;
+    background: rgba(168, 85, 247, 0.04);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .dwh-block .dwh-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: #a855f7;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .dwh-tables {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .dim-table {
+    background: rgba(168, 85, 247, 0.1);
+    border: 1px solid rgba(168, 85, 247, 0.25);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 11px;
+    font-family: 'Space Mono', monospace;
+    color: #c4b5fd;
+    white-space: nowrap;
+  }
+
+  .fact-table {
+    background: rgba(168, 85, 247, 0.2);
+    border: 1px solid rgba(168, 85, 247, 0.5);
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 12px;
+    font-family: 'Space Mono', monospace;
+    color: #e9d5ff;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  /* Animations */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50%       { opacity: 1; }
+  }
+
+  @keyframes flow {
+    0%   { stroke-dashoffset: 20; }
+    100% { stroke-dashoffset: 0; }
+  }
+
+  .animated-arrow {
+    stroke-dasharray: 6 4;
+    animation: flow 1s linear infinite;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .service { width: 140px; min-height: 100px; }
+    .service .icon { font-size: 24px; }
+    .service .name { font-size: 11px; }
+    .arrow-h { width: 36px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="badge">ElectroTrend · Azure Data Platform</div>
+    <h1>Architecture du Pipeline<br>Azure Full Stack</h1>
+    <p>Apple Global Sales · 11 500 transactions · 2022–2024 · 47 pays</p>
+  </div>
+
+  <p class="hint">▸ Cliquez sur un service pour en savoir plus</p>
+
+  <div class="pipeline" style="margin-top:32px;">
+
+    <!-- ROW 1 : Source CSV -->
+    <div class="row">
+      <div class="service s-source" onclick="showInfo('source')">
+        <div class="glow"></div>
+        <div class="icon">📄</div>
+        <div class="name">CSV Source</div>
+        <div class="tag">Raw Data</div>
+      </div>
+    </div>
+
+    <!-- Arrow down -->
+    <div class="row">
+      <div class="arrow-v">
+        <svg width="2" height="48" viewBox="0 0 2 48">
+          <line x1="1" y1="0" x2="1" y2="38" stroke="#06b6d4" stroke-width="1.5" class="animated-arrow"/>
+          <polygon points="1,48 -4,36 6,36" fill="#06b6d4"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- ROW 2 : Blob Storage -->
+    <div class="row">
+      <div class="service s-blob wide" onclick="showInfo('blob')">
+        <div class="glow"></div>
+        <div class="icon">☁️</div>
+        <div class="name">Azure Blob Storage</div>
+        <div class="tag">Landing Zone</div>
+      </div>
+    </div>
+
+    <!-- Arrow down -->
+    <div class="row">
+      <div class="arrow-v">
+        <svg width="2" height="48" viewBox="0 0 2 48">
+          <line x1="1" y1="0" x2="1" y2="38" stroke="#f97316" stroke-width="1.5" class="animated-arrow"/>
+          <polygon points="1,48 -4,36 6,36" fill="#f97316"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- ROW 3 : ADF -->
+    <div class="row">
+      <div class="service s-adf wide" onclick="showInfo('adf')">
+        <div class="glow"></div>
+        <div class="icon">🔄</div>
+        <div class="name">Azure Data Factory</div>
+        <div class="tag">Orchestration</div>
+      </div>
+    </div>
+
+    <!-- Arrow down -->
+    <div class="row">
+      <div class="arrow-v">
+        <svg width="2" height="48" viewBox="0 0 2 48">
+          <line x1="1" y1="0" x2="1" y2="38" stroke="#8b5cf6" stroke-width="1.5" class="animated-arrow"/>
+          <polygon points="1,48 -4,36 6,36" fill="#8b5cf6"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- ROW 4 : SSIS + SQL Server -->
+    <div class="row">
+      <div class="multi">
+        <div class="multi-col">
+          <div class="service s-ssis" onclick="showInfo('ssis')">
+            <div class="glow"></div>
+            <div class="icon">⚙️</div>
+            <div class="name">SSIS ETL</div>
+            <div class="tag">Transform</div>
+          </div>
+        </div>
+        <div class="arrow-h">
+          <svg viewBox="0 0 60 20" height="20">
+            <line x1="0" y1="10" x2="48" y2="10" stroke="#3b82f6" stroke-width="1.5" class="animated-arrow" stroke-dasharray="6 4"/>
+            <polygon points="60,10 46,4 46,16" fill="#3b82f6"/>
+          </svg>
+        </div>
+        <div class="multi-col">
+          <div class="service s-sql" onclick="showInfo('sql')">
+            <div class="glow"></div>
+            <div class="icon">🗄️</div>
+            <div class="name">SQL Database</div>
+            <div class="tag">Staging DB</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Arrow down -->
+    <div class="row">
+      <div class="arrow-v">
+        <svg width="2" height="48" viewBox="0 0 2 48">
+          <line x1="1" y1="0" x2="1" y2="38" stroke="#a855f7" stroke-width="1.5" class="animated-arrow"/>
+          <polygon points="1,48 -4,36 6,36" fill="#a855f7"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- ROW 5 : DWH Synapse -->
+    <div class="row">
+      <div class="dwh-block">
+        <div class="dwh-title">⬡ Azure Synapse Analytics — Data Warehouse</div>
+        <div class="fact-table" onclick="showInfo('synapse')" style="cursor:pointer;">★ Fact_Sales</div>
+        <div class="dwh-tables">
+          <div class="dim-table">Dim_Date</div>
+          <div class="dim-table">Dim_Product</div>
+          <div class="dim-table">Dim_Geography</div>
+          <div class="dim-table">Dim_Channel</div>
+          <div class="dim-table">Dim_CustomerSegment</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Arrow down -->
+    <div class="row">
+      <div class="arrow-v">
+        <svg width="2" height="48" viewBox="0 0 2 48">
+          <line x1="1" y1="0" x2="1" y2="38" stroke="#f59e0b" stroke-width="1.5" class="animated-arrow"/>
+          <polygon points="1,48 -4,36 6,36" fill="#f59e0b"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- ROW 6 : SSAS -->
+    <div class="row">
+      <div class="service s-ssas wide" onclick="showInfo('ssas')">
+        <div class="glow"></div>
+        <div class="icon">🧠</div>
+        <div class="name">SSAS Tabular</div>
+        <div class="tag">Mesures DAX</div>
+      </div>
+    </div>
+
+    <!-- Arrow down -->
+    <div class="row">
+      <div class="arrow-v">
+        <svg width="2" height="48" viewBox="0 0 2 48">
+          <line x1="1" y1="0" x2="1" y2="38" stroke="#f59e0b" stroke-width="1.5" class="animated-arrow"/>
+          <polygon points="1,48 -4,36 6,36" fill="#f59e0b"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- ROW 7 : Power BI -->
+    <div class="row">
+      <div class="service s-pbi wide" onclick="showInfo('pbi')">
+        <div class="glow"></div>
+        <div class="icon">📊</div>
+        <div class="name">Power BI</div>
+        <div class="tag">Dashboard Exécutif</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#10b981"></div>Source brute</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#06b6d4"></div>Stockage Cloud</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#f97316"></div>Orchestration</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6"></div>ETL / Transform</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>Staging</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#a855f7"></div>Data Warehouse</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>Analytique / BI</div>
+  </div>
+
+</div>
+
+<!-- Info Panel -->
+<div class="info-panel" id="infoPanel">
+  <button class="close-btn" onclick="closeInfo()">✕</button>
+  <h3 id="panelTitle"></h3>
+  <span class="panel-tag" id="panelTag"></span>
+  <p id="panelDesc"></p>
+  <ul id="panelList"></ul>
+</div>
+
+<script>
+const data = {
+  source: {
+    title: "CSV Source",
+    tag: "Raw Data · Entrée du pipeline",
+    color: "#10b981",
+    desc: "Le fichier appelglobalsales_dataset.csv contenant 11 500 transactions de ventes Apple entre 2022 et 2024. C'est le point de départ de tout le pipeline.",
+    items: ["11 500 transactions", "27 colonnes", "47 pays · 514 villes", "43 produits Apple", "Période : 2022 – 2024"]
+  },
+  blob: {
+    title: "Azure Blob Storage",
+    tag: "Landing Zone · Stockage Cloud",
+    color: "#06b6d4",
+    desc: "Zone d'atterrissage des données brutes. Le CSV est uploadé ici avant tout traitement. ADF surveille ce container et déclenche le pipeline dès qu'un fichier arrive.",
+    items: ["Container : landing-zone", "Tier : Hot (accès fréquent)", "Trigger Event-based vers ADF", "Données non modifiées ici", "Point d'entrée du pipeline"]
+  },
+  adf: {
+    title: "Azure Data Factory",
+    tag: "Orchestration · Chef de chantier",
+    color: "#f97316",
+    desc: "Orchestre tout le pipeline. Ne touche pas aux données lui-même, mais coordonne chaque étape dans le bon ordre : ingestion, lancement SSIS, chargement vers Synapse.",
+    items: ["Pipeline : Ingestion_ElectroTrend", "Copy Activity : Blob → SQL Staging", "Execute SSIS Package", "Linked Services : Blob + SQL + Synapse", "Trigger : Event-based (nouveau fichier)"]
+  },
+  ssis: {
+    title: "SSIS ETL",
+    tag: "Extract · Transform · Load",
+    color: "#8b5cf6",
+    desc: "Effectue le vrai travail de nettoyage et transformation des données. Lit depuis SQL Staging brut, nettoie, normalise, et recharge proprement.",
+    items: ["Gestion des valeurs NULL", "Conversion types : String → Date/Decimal", "Suppression des doublons", "Normalisation des noms pays/produits", "Fichier livrable : .dtsx"]
+  },
+  sql: {
+    title: "SQL Database",
+    tag: "Staging DB · Zone intermédiaire",
+    color: "#3b82f6",
+    desc: "Base de données Azure managée qui reçoit les données nettoyées par SSIS. Sert de pont entre l'ETL et le Data Warehouse Synapse. Entièrement géré par Azure, sans administration serveur.",
+    items: ["Service : Azure SQL Database", "Base : StagingDB", "Table : Staging_Sales", "27 colonnes typées", "Zone tampon avant DWH", "Lu par les scripts SQL Synapse"]
+  },
+  synapse: {
+    title: "Azure Synapse Analytics",
+    tag: "Data Warehouse · Schéma en étoile",
+    color: "#a855f7",
+    desc: "Entrepôt de données final. Les données sont modélisées en schéma en étoile pour permettre des analyses rapides et complexes à grande échelle.",
+    items: ["Fact_Sales : table centrale", "Dim_Date · Dim_Product · Dim_Geography", "Dim_Channel · Dim_CustomerSegment", "Optimisé pour requêtes analytiques", "Alimenté par scripts SQL depuis Staging"]
+  },
+  ssas: {
+    title: "SSAS Tabular",
+    tag: "Moteur analytique · Mesures DAX",
+    color: "#f59e0b",
+    desc: "Crée un modèle analytique en mémoire sur les tables du DWH. Calcule les KPIs via des formules DAX. Power BI se connecte ici en Live Connection.",
+    items: ["Total Revenue", "Total Units Sold", "Average Discount", "Return Rate %", "Revenue YoY Growth", "Channel Performance", "Fichier livrable : .bim"]
+  },
+  pbi: {
+    title: "Power BI",
+    tag: "Dashboard Exécutif · Visualisation",
+    color: "#f59e0b",
+    desc: "Dashboard interactif connecté en live au modèle SSAS. Affiche les KPIs et visualisations qui répondent aux 7 questions business du projet.",
+    items: ["Page 1 : Vue Executive (KPI Cards)", "Page 2 : Analyse Géographique", "Page 3 : Performance Produits", "Page 4 : Analyse Canaux de vente", "Page 5 : Analyse Temporelle Q4", "Page 6 : Segments Clients", "Fichier livrable : .pbix"]
+  }
+};
+
+function showInfo(key) {
+  const d = data[key];
+  const panel = document.getElementById('infoPanel');
+  document.getElementById('panelTitle').textContent = d.title;
+  document.getElementById('panelTag').textContent = d.tag;
+  document.getElementById('panelDesc').textContent = d.desc;
+  panel.style.setProperty('--panel-color', d.color);
+  const ul = document.getElementById('panelList');
+  ul.innerHTML = d.items.map(i => `<li>${i}</li>`).join('');
+  panel.classList.add('open');
+}
+
+function closeInfo() {
+  document.getElementById('infoPanel').classList.remove('open');
+}
+</script>
+</body>
+</html>
