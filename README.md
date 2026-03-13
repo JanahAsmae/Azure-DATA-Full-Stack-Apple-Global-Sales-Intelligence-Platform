@@ -1,11 +1,11 @@
 # Apple Global Product Sales – Azure Data Intelligence Platform
-### Description du projet
+## Description du projet
 
 Ce projet consiste à concevoir une plateforme complète d’analyse des ventes Apple à l’échelle mondiale en utilisant les services Microsoft Azure, un pipeline ETL, un modèle décisionnel en étoile, et un dashboard Power BI pour produire des analyses métiers.
 
 L’objectif est de construire une architecture Data moderne (Data Pipeline + Data Warehouse + BI) permettant de transformer des données brutes en indicateurs stratégiques pour la prise de décision.
 
-### Dataset utilisé
+## Dataset utilisé
 
 **Nom :** Apple Global Product Sales Dataset
 **Contenu :**
@@ -31,7 +31,7 @@ Ce dataset contient les informations de vente comme :
 - Retours produits
 - Segment client
 
-### Étape préliminaire : Étude des services Azure
+## Étape préliminaire : Étude des services Azure
 Avant l’implémentation technique, une étude complète de l’écosystème Azure Data a été réalisée.
 **Document :**
 ```
@@ -56,7 +56,7 @@ azure_repport-2.pdf
 - Power Apps & Power Automate
 
 
-### Architecture du projet
+## Architecture du projet
 ```
                 Source Data
                     │
@@ -91,36 +91,39 @@ azure_repport-2.pdf
                Power BI
         Dashboard & Business Insights
 ```
-### Pipeline de traitement des données
-**1- Azure Blob Storage**
+## Pipeline de traitement des données
+### 1- Azure Blob Storage
+
 Utilisé pour le stockage initial des données brutes.
 
-Actions réalisées : Upload du fichier CSV -> Organisation dans une Landing Zone
-Structure :
+**Actions réalisées :** Upload du fichier CSV -> Organisation dans une Landing Zone
+
+**Structure :**
 ```
 blob-storage
    └── landing-zone
           └── appelglobalsales_dataset.csv
 ```
-**2- Azure Data Factory**
+### 2- Azure Data Factory
 Azure Data Factory est utilisé pour orchestrer le pipeline de données.
 
-Fonctionnalités utilisées:
+**Fonctionnalités utilisées:**
 
 - Pipeline d’ingestion
 - Déclenchement du package SSIS
 - Gestion des dépendances
 - Automatisation du flux de données
 
-Pipeline :
+**Pipeline :**
 - Lecture du fichier depuis Blob Storage
 - Déclenchement du processus ETL SSIS
 - Chargement dans SQL Server
 
-**3- SSIS – Processus ETL**
+### 3- SSIS – Processus ETL
 SQL Server Integration Services est utilisé pour le traitement des données.
 
-Étapes ETL:
+**Étapes ETL:**
+
 Extraction
 - Lecture des données depuis le fichier CSV.
 
@@ -131,15 +134,16 @@ Transformation
 Chargement
 - Chargement dans SQL Server (Staging) puis vers le Data Warehouse.
 
-### Modélisation du Data Warehouse
+## Modélisation du Data Warehouse
 Un modèle en étoile (Star Schema) a été créé dans SQL Server.
 
 **Table de faits**: Fact_Sales
 **Tables de dimensions**: Dim_Date, Dim_Product, Dim_Geography, Dim_Channel, DimCustomerSegment
 
 
-### Power BI – Visualisation
+## Power BI – Visualisation
 **Mesures (KPIs)**
+
 Les mesures suivantes ont été créées :
 - Total Revenue
 - Total Units Sold
@@ -150,7 +154,8 @@ Les mesures suivantes ont été créées :
 - Channel Performance
 
 **Analyses métier réalisées**
-Le dashboard permet de répondre à plusieurs questions business.
+
+Le dashboard permet de répondre à plusieurs questions business:
 
 - Analyse de la performance géographique des ventes : Quel pays génère le plus de revenu ?
 - Comparaison des ventes entre produits Apple selon les régions : Quelle catégorie domine par région ?
@@ -160,7 +165,7 @@ Le dashboard permet de répondre à plusieurs questions business.
 - Identification des périodes de forte vente : Analyse saisonnière
 - Identification des produits avec le plus de retours : Taux de retour par produit
 
-### Installation / Utilisation
+## Installation / Utilisation
 
 **1- Cloner le projet**
 ```
