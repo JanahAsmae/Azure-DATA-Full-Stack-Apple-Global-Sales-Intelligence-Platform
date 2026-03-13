@@ -43,6 +43,18 @@ azure_repport-2.pdf
 - Justifier les choix d’architecture utilisés dans ce projet
 
 **Services étudiés**
+- Microsoft Fabric (OneLake) 
+- Azure Data Lake Storage (ADLS) Gen2
+- Comptes de Stockage Azure (Blob)
+- Azure Data Factory (ADF)
+- Azure Functions
+- Azure Databricks
+- Azure Synapse Analytics
+- Azure Data Explorer (Kusto /ADX) 
+- Azure Stream Analytics
+- Power BI Premium
+- Power Apps & Power Automate
+
 
 ### Architecture du projet
 ```
@@ -79,3 +91,61 @@ azure_repport-2.pdf
                Power BI
         Dashboard & Business Insights
 ```
+### Pipeline de traitement des données
+**1- Azure Blob Storage**
+Utilisé pour le stockage initial des données brutes.
+
+Actions réalisées : Upload du fichier CSV -> Organisation dans une Landing Zone
+Structure :
+```
+blob-storage
+   └── landing-zone
+          └── appelglobalsales_dataset.csv
+```
+**2- Azure Data Factory**
+Azure Data Factory est utilisé pour orchestrer le pipeline de données.
+
+Fonctionnalités utilisées:
+
+- Pipeline d’ingestion
+- Déclenchement du package SSIS
+- Gestion des dépendances
+- Automatisation du flux de données
+
+Pipeline :
+- Lecture du fichier depuis Blob Storage
+- Déclenchement du processus ETL SSIS
+- Chargement dans SQL Server
+
+**3- SSIS – Processus ETL**
+SQL Server Integration Services est utilisé pour le traitement des données.
+
+Étapes ETL:
+Extraction
+- Lecture des données depuis le fichier CSV.
+
+Transformation
+- Nettoyage des données
+- Transformation des formats
+
+Chargement
+- Chargement dans SQL Server (Staging) puis vers le Data Warehouse.
+
+### Modélisation du Data Warehouse
+Un modèle en étoile (Star Schema) a été créé dans SQL Server.
+
+**Table de faits**: Fact_Sales
+**Tables de dimensions**: Dim_Date, Dim_Product, Dim_Geography, Dim_Channel, DimCustomerSegment
+
+
+### Power BI – Visualisation
+**Mesures (KPIs)**
+Les mesures suivantes ont été créées :
+- Total Revenue
+- Total Units Sold
+- Average Discount
+- Return Rate %
+- Revenue YoY Growth
+- Revenue by Region
+- Channel Performance
+
