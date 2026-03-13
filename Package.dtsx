@@ -1,0 +1,1295 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="3/9/2026 8:53:16 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ASMAE"
+  DTS:CreatorName="ASMAE\asmaj"
+  DTS:DTSID="{04D479B7-7DFB-4D0E-BB44-A62086B7BBCF}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="17.0.1010.2"
+  DTS:LocaleID="3084"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="3"
+  DTS:VersionGUID="{9FF2732F-5C59-438A-B590-1815DEC06802}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[electrotrend-server.database.windows.net.StagingDB.simlpon]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{43AA9333-543D-43CA-BA72-D219B584C7A2}"
+      DTS:ObjectName="electrotrend-server.database.windows.net.StagingDB.simlpon">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=electrotrend-server.database.windows.net;User ID=simlpon;Initial Catalog=StagingDB;Provider=MSOLEDBSQL.1;Application Name=SSIS-Package-{43AA9333-543D-43CA-BA72-D219B584C7A2}electrotrend-server.database.windows.net.StagingDB.simlpon;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAqR/h5t0KUEqhe2RuS4zB6gAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAA/b5l9gYcjmY9ltdQr85cXQ0tcYTUISEYCHF33oxUarwAAAAAOgAAAAAIAACAAAAAMSBE1gon/+57FeDCcfwvwvHWydFPriF2+zONLGLg+aSAAAADK9GBQXpwLZENnfe/rGGGat0NIyi31wE9yHVef5ElX90AAAADieiq72XJ4fq1kd2meMUVevuWySTM4u2/KmW9NKgZ2twAYmoljYAsEftade2xvIDjU2XGD3mTT1iBDqOpYyxAO</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\ETL_ElectroTrend"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{A279A1A1-3712-46D9-8E61-661E266DB82A}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="ETL_ElectroTrend"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\ETL_ElectroTrend\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Staging_Sales]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\ETL_ElectroTrend\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[electrotrend-server.database.windows.net.StagingDB.simlpon]"
+                  connectionManagerRefId="Package.ConnectionManagers[electrotrend-server.database.windows.net.StagingDB.simlpon]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Sale_ID]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="Sale_ID"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Sale_ID]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Sale_ID]" />
+                    <inputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Sale_Date]"
+                      cachedDataType="dbDate"
+                      cachedName="Sale_Date"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Sale_Date]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Sale_Date]" />
+                    <inputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Year]"
+                      cachedDataType="i4"
+                      cachedName="Year"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Year]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Year]" />
+                    <inputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Quarter]"
+                      cachedDataType="wstr"
+                      cachedLength="5"
+                      cachedName="Quarter"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Quarter]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Quarter]" />
+                    <inputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Month]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="Month"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Month]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Month]" />
+                    <inputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Country]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="Country"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Country]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Country]" />
+                    <inputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Region]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="Region"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Region]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Region]" />
+                    <inputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[City]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="City"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[City]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[City]" />
+                    <inputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Product_Name]"
+                      cachedDataType="wstr"
+                      cachedLength="200"
+                      cachedName="Product_Name"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Product_Name]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Product_Name]" />
+                    <inputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Category]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="Category"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Category]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Category]" />
+                    <inputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Storage]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Storage"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Storage]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Storage]" />
+                    <inputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Color]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Color"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Color]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Color]" />
+                    <inputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Unit_Price_USD]"
+                      cachedDataType="numeric"
+                      cachedName="Unit_Price_USD"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Unit_Price_USD]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Unit_Price_USD]" />
+                    <inputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Discount_Pct]"
+                      cachedDataType="numeric"
+                      cachedName="Discount_Pct"
+                      cachedPrecision="5"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Discount_Pct]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Discount_Pct]" />
+                    <inputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Units_Sold]"
+                      cachedDataType="i4"
+                      cachedName="Units_Sold"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Units_Sold]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Units_Sold]" />
+                    <inputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Discounted_Price_USD]"
+                      cachedDataType="numeric"
+                      cachedName="Discounted_Price_USD"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Discounted_Price_USD]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Discounted_Price_USD]" />
+                    <inputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Revenue_USD]"
+                      cachedDataType="numeric"
+                      cachedName="Revenue_USD"
+                      cachedPrecision="15"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Revenue_USD]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Revenue_USD]" />
+                    <inputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Currency]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="Currency"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Currency]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Currency]" />
+                    <inputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FX_Rate_To_USD]"
+                      cachedDataType="numeric"
+                      cachedName="FX_Rate_To_USD"
+                      cachedPrecision="10"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FX_Rate_To_USD]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[FX_Rate_To_USD]" />
+                    <inputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Revenue_Local_Currency]"
+                      cachedDataType="numeric"
+                      cachedName="Revenue_Local_Currency"
+                      cachedPrecision="20"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Revenue_Local_Currency]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Revenue_Local_Currency]" />
+                    <inputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Sales_Channel]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="Sales_Channel"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Sales_Channel]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Sales_Channel]" />
+                    <inputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Payment_Method]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Payment_Method"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Payment_Method]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Payment_Method]" />
+                    <inputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Customer_Segment]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Customer_Segment"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Customer_Segment]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Customer_Segment]" />
+                    <inputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Customer_Age_Group]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="Customer_Age_Group"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Customer_Age_Group]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Customer_Age_Group]" />
+                    <inputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Previous_Device_OS]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Previous_Device_OS"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Previous_Device_OS]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Previous_Device_OS]" />
+                    <inputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Customer_Rating]"
+                      cachedDataType="numeric"
+                      cachedName="Customer_Rating"
+                      cachedPrecision="3"
+                      cachedScale="1"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Customer_Rating]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Customer_Rating]" />
+                    <inputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Return_Status]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="Return_Status"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Return_Status]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Return_Status]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Sale_ID]"
+                      dataType="wstr"
+                      length="20"
+                      name="Sale_ID" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Sale_Date]"
+                      dataType="dbDate"
+                      name="Sale_Date" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Year]"
+                      dataType="i4"
+                      name="Year" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Quarter]"
+                      dataType="wstr"
+                      length="5"
+                      name="Quarter" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Month]"
+                      dataType="wstr"
+                      length="20"
+                      name="Month" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Country]"
+                      dataType="wstr"
+                      length="100"
+                      name="Country" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Region]"
+                      dataType="wstr"
+                      length="100"
+                      name="Region" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[City]"
+                      dataType="wstr"
+                      length="100"
+                      name="City" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Product_Name]"
+                      dataType="wstr"
+                      length="200"
+                      name="Product_Name" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Category]"
+                      dataType="wstr"
+                      length="100"
+                      name="Category" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Storage]"
+                      dataType="wstr"
+                      length="50"
+                      name="Storage" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Color]"
+                      dataType="wstr"
+                      length="50"
+                      name="Color" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Unit_Price_USD]"
+                      dataType="numeric"
+                      name="Unit_Price_USD"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Discount_Pct]"
+                      dataType="numeric"
+                      name="Discount_Pct"
+                      precision="5"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Units_Sold]"
+                      dataType="i4"
+                      name="Units_Sold" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Discounted_Price_USD]"
+                      dataType="numeric"
+                      name="Discounted_Price_USD"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Revenue_USD]"
+                      dataType="numeric"
+                      name="Revenue_USD"
+                      precision="15"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Currency]"
+                      dataType="wstr"
+                      length="10"
+                      name="Currency" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FX_Rate_To_USD]"
+                      dataType="numeric"
+                      name="FX_Rate_To_USD"
+                      precision="10"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Revenue_Local_Currency]"
+                      dataType="numeric"
+                      name="Revenue_Local_Currency"
+                      precision="20"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Sales_Channel]"
+                      dataType="wstr"
+                      length="100"
+                      name="Sales_Channel" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Payment_Method]"
+                      dataType="wstr"
+                      length="50"
+                      name="Payment_Method" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Customer_Segment]"
+                      dataType="wstr"
+                      length="50"
+                      name="Customer_Segment" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Customer_Age_Group]"
+                      dataType="wstr"
+                      length="20"
+                      name="Customer_Age_Group" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Previous_Device_OS]"
+                      dataType="wstr"
+                      length="50"
+                      name="Previous_Device_OS" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Customer_Rating]"
+                      dataType="numeric"
+                      name="Customer_Rating"
+                      precision="3"
+                      scale="1" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Return_Status]"
+                      dataType="wstr"
+                      length="20"
+                      name="Return_Status" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Loaded_At]"
+                      dataType="dbTimeStamp"
+                      name="Loaded_At" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\ETL_ElectroTrend\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\ETL_ElectroTrend\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[apple_global_sales_dataset]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT
+    CAST(sale_id AS NVARCHAR(20))                     AS Sale_ID,
+    TRY_CAST(sale_date AS DATE)                       AS Sale_Date,
+    TRY_CAST(year AS INT)                             AS Year,
+    CAST(quarter AS NVARCHAR(5))                      AS Quarter,
+    CAST(month AS NVARCHAR(20))                       AS Month,
+    CAST(country AS NVARCHAR(100))                    AS Country,
+    CAST(region AS NVARCHAR(100))                     AS Region,
+    CAST(city AS NVARCHAR(100))                       AS City,
+    CAST(product_name AS NVARCHAR(200))               AS Product_Name,
+    CAST(category AS NVARCHAR(100))                   AS Category,
+    CAST(storage AS NVARCHAR(50))                     AS Storage,
+    CAST(color AS NVARCHAR(50))                       AS Color,
+    TRY_CAST(unit_price_usd AS DECIMAL(10,2))         AS Unit_Price_USD,
+    TRY_CAST(discount_pct AS DECIMAL(5,2))            AS Discount_Pct,
+    TRY_CAST(units_sold AS INT)                       AS Units_Sold,
+    TRY_CAST(discounted_price_usd AS DECIMAL(10,2))   AS Discounted_Price_USD,
+    TRY_CAST(revenue_usd AS DECIMAL(15,2))            AS Revenue_USD,
+    CAST(currency AS NVARCHAR(10))                    AS Currency,
+    TRY_CAST(fx_rate_to_usd AS DECIMAL(10,4))         AS FX_Rate_To_USD,
+    TRY_CAST(revenue_local_currency AS DECIMAL(20,2)) AS Revenue_Local_Currency,
+    CAST(sales_channel AS NVARCHAR(100))              AS Sales_Channel,
+    CAST(payment_method AS NVARCHAR(50))              AS Payment_Method,
+    CAST(customer_segment AS NVARCHAR(50))            AS Customer_Segment,
+    CAST(customer_age_group AS NVARCHAR(20))          AS Customer_Age_Group,
+    CAST(previous_device_os AS NVARCHAR(50))          AS Previous_Device_OS,
+    TRY_CAST(customer_rating AS DECIMAL(3,1))         AS Customer_Rating,
+    CAST(return_status AS NVARCHAR(20))               AS Return_Status
+FROM dbo.apple_global_sales_dataset</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\ETL_ElectroTrend\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[electrotrend-server.database.windows.net.StagingDB.simlpon]"
+                  connectionManagerRefId="Package.ConnectionManagers[electrotrend-server.database.windows.net.StagingDB.simlpon]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Sale_ID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Sale_ID]"
+                      length="20"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Sale_ID]"
+                      name="Sale_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Sale_Date]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Sale_Date]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Sale_Date]"
+                      name="Sale_Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Year]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Year]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Year]"
+                      name="Year"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Quarter]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Quarter]"
+                      length="5"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Quarter]"
+                      name="Quarter"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Month]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Month]"
+                      length="20"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Month]"
+                      name="Month"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Country]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Country]"
+                      length="100"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Country]"
+                      name="Country"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Region]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Region]"
+                      length="100"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Region]"
+                      name="Region"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[City]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[City]"
+                      length="100"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[City]"
+                      name="City"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Product_Name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Product_Name]"
+                      length="200"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Product_Name]"
+                      name="Product_Name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Category]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Category]"
+                      length="100"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Category]"
+                      name="Category"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Storage]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Storage]"
+                      length="50"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Storage]"
+                      name="Storage"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Color]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Color]"
+                      length="50"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Color]"
+                      name="Color"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Unit_Price_USD]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Unit_Price_USD]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Unit_Price_USD]"
+                      name="Unit_Price_USD"
+                      precision="10"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Discount_Pct]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Discount_Pct]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Discount_Pct]"
+                      name="Discount_Pct"
+                      precision="5"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Units_Sold]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Units_Sold]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Units_Sold]"
+                      name="Units_Sold"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Discounted_Price_USD]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Discounted_Price_USD]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Discounted_Price_USD]"
+                      name="Discounted_Price_USD"
+                      precision="10"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Revenue_USD]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Revenue_USD]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Revenue_USD]"
+                      name="Revenue_USD"
+                      precision="15"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Currency]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Currency]"
+                      length="10"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Currency]"
+                      name="Currency"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[FX_Rate_To_USD]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FX_Rate_To_USD]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[FX_Rate_To_USD]"
+                      name="FX_Rate_To_USD"
+                      precision="10"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Revenue_Local_Currency]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Revenue_Local_Currency]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Revenue_Local_Currency]"
+                      name="Revenue_Local_Currency"
+                      precision="20"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Sales_Channel]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Sales_Channel]"
+                      length="100"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Sales_Channel]"
+                      name="Sales_Channel"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Payment_Method]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Payment_Method]"
+                      length="50"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Payment_Method]"
+                      name="Payment_Method"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Customer_Segment]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Customer_Segment]"
+                      length="50"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Customer_Segment]"
+                      name="Customer_Segment"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Customer_Age_Group]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Customer_Age_Group]"
+                      length="20"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Customer_Age_Group]"
+                      name="Customer_Age_Group"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Previous_Device_OS]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Previous_Device_OS]"
+                      length="50"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Previous_Device_OS]"
+                      name="Previous_Device_OS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Customer_Rating]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Customer_Rating]"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Customer_Rating]"
+                      name="Customer_Rating"
+                      precision="3"
+                      scale="1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Return_Status]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Return_Status]"
+                      length="20"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].Columns[Return_Status]"
+                      name="Return_Status"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Sale_ID]"
+                      dataType="wstr"
+                      length="20"
+                      name="Sale_ID" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Sale_Date]"
+                      dataType="dbDate"
+                      name="Sale_Date" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Year]"
+                      dataType="i4"
+                      name="Year" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Quarter]"
+                      dataType="wstr"
+                      length="5"
+                      name="Quarter" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Month]"
+                      dataType="wstr"
+                      length="20"
+                      name="Month" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Country]"
+                      dataType="wstr"
+                      length="100"
+                      name="Country" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Region]"
+                      dataType="wstr"
+                      length="100"
+                      name="Region" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[City]"
+                      dataType="wstr"
+                      length="100"
+                      name="City" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Product_Name]"
+                      dataType="wstr"
+                      length="200"
+                      name="Product_Name" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Category]"
+                      dataType="wstr"
+                      length="100"
+                      name="Category" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Storage]"
+                      dataType="wstr"
+                      length="50"
+                      name="Storage" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Color]"
+                      dataType="wstr"
+                      length="50"
+                      name="Color" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Unit_Price_USD]"
+                      dataType="numeric"
+                      name="Unit_Price_USD"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Discount_Pct]"
+                      dataType="numeric"
+                      name="Discount_Pct"
+                      precision="5"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Units_Sold]"
+                      dataType="i4"
+                      name="Units_Sold" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Discounted_Price_USD]"
+                      dataType="numeric"
+                      name="Discounted_Price_USD"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Revenue_USD]"
+                      dataType="numeric"
+                      name="Revenue_USD"
+                      precision="15"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Currency]"
+                      dataType="wstr"
+                      length="10"
+                      name="Currency" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FX_Rate_To_USD]"
+                      dataType="numeric"
+                      name="FX_Rate_To_USD"
+                      precision="10"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Revenue_Local_Currency]"
+                      dataType="numeric"
+                      name="Revenue_Local_Currency"
+                      precision="20"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Sales_Channel]"
+                      dataType="wstr"
+                      length="100"
+                      name="Sales_Channel" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Payment_Method]"
+                      dataType="wstr"
+                      length="50"
+                      name="Payment_Method" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Customer_Segment]"
+                      dataType="wstr"
+                      length="50"
+                      name="Customer_Segment" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Customer_Age_Group]"
+                      dataType="wstr"
+                      length="20"
+                      name="Customer_Age_Group" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Previous_Device_OS]"
+                      dataType="wstr"
+                      length="50"
+                      name="Previous_Device_OS" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Customer_Rating]"
+                      dataType="numeric"
+                      name="Customer_Rating"
+                      precision="3"
+                      scale="1" />
+                    <externalMetadataColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Return_Status]"
+                      dataType="wstr"
+                      length="20"
+                      name="Return_Status" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Sale_ID]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Sale_ID]"
+                      name="Sale_ID" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Sale_Date]"
+                      dataType="dbDate"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Sale_Date]"
+                      name="Sale_Date" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Year]"
+                      dataType="i4"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Year]"
+                      name="Year" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Quarter]"
+                      dataType="wstr"
+                      length="5"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Quarter]"
+                      name="Quarter" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Month]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Month]"
+                      name="Month" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Country]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Country]"
+                      name="Country" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Region]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Region]"
+                      name="Region" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[City]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[City]"
+                      name="City" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Product_Name]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Product_Name]"
+                      name="Product_Name" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Category]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Category]"
+                      name="Category" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Storage]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Storage]"
+                      name="Storage" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Color]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Color]"
+                      name="Color" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Unit_Price_USD]"
+                      dataType="numeric"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Unit_Price_USD]"
+                      name="Unit_Price_USD"
+                      precision="10"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Discount_Pct]"
+                      dataType="numeric"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Discount_Pct]"
+                      name="Discount_Pct"
+                      precision="5"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Units_Sold]"
+                      dataType="i4"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Units_Sold]"
+                      name="Units_Sold" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Discounted_Price_USD]"
+                      dataType="numeric"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Discounted_Price_USD]"
+                      name="Discounted_Price_USD"
+                      precision="10"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Revenue_USD]"
+                      dataType="numeric"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Revenue_USD]"
+                      name="Revenue_USD"
+                      precision="15"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Currency]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Currency]"
+                      name="Currency" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FX_Rate_To_USD]"
+                      dataType="numeric"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FX_Rate_To_USD]"
+                      name="FX_Rate_To_USD"
+                      precision="10"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Revenue_Local_Currency]"
+                      dataType="numeric"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Revenue_Local_Currency]"
+                      name="Revenue_Local_Currency"
+                      precision="20"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Sales_Channel]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Sales_Channel]"
+                      name="Sales_Channel" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Payment_Method]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Payment_Method]"
+                      name="Payment_Method" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Customer_Segment]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Customer_Segment]"
+                      name="Customer_Segment" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Customer_Age_Group]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Customer_Age_Group]"
+                      name="Customer_Age_Group" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Previous_Device_OS]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Previous_Device_OS]"
+                      name="Previous_Device_OS" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Customer_Rating]"
+                      dataType="numeric"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Customer_Rating]"
+                      name="Customer_Rating"
+                      precision="3"
+                      scale="1" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Return_Status]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Return_Status]"
+                      name="Return_Status" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\ETL_ElectroTrend.Paths[OLE DB Source Output]"
+              endId="Package\ETL_ElectroTrend\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\ETL_ElectroTrend\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--Cette section CDATA contient des informations sur la disposition du package. Elle comprend des informations telles que les coordonnées (x,y), la largeur et la hauteur.-->
+<!--Si vous modifiez manuellement cette section et commettez une erreur, vous pouvez la supprimer. -->
+<!--Le package pourra toujours se charger normalement, mais les informations de disposition précédente seront perdues et le concepteur réorganisera automatiquement les éléments sur l'aire de conception.-->
+<Objects
+  Version="8">
+  <!--Chaque nœud ci-dessous contiendra des propriétés qui n'affectent pas le comportement d'exécution.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="162.666666666667,42.6666666666667"
+          Id="Package\ETL_ElectroTrend"
+          TopLeft="94.9999957531692,102.049995133877" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\ETL_ElectroTrend">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="150.666666666667,42.6666666666667"
+          Id="Package\ETL_ElectroTrend\OLE DB Source"
+          TopLeft="51.2499977089466,55.2499973654748" />
+        <NodeLayout
+          Size="172,42.6666666666667"
+          Id="Package\ETL_ElectroTrend\OLE DB Destination"
+          TopLeft="262.499988265336,163.149992220402" />
+        <EdgeLayout
+          Id="Package\ETL_ElectroTrend.Paths[OLE DB Source Output]"
+          TopLeft="126.58333104228,97.9166640321414">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="221.916657223056,65.2333281882606"
+              Start="0,0"
+              End="221.916657223056,57.7333281882606">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.6166640941303" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,28.6166640941303"
+                    Point2="0,32.6166640941303"
+                    Point3="4,32.6166640941303" />
+                  <mssgle:LineSegment
+                    End="217.916657223056,32.6166640941303" />
+                  <mssgle:CubicBezierSegment
+                    Point1="217.916657223056,32.6166640941303"
+                    Point2="221.916657223056,32.6166640941303"
+                    Point3="221.916657223056,36.6166640941303" />
+                  <mssgle:LineSegment
+                    End="221.916657223056,57.7333281882606" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\ETL_ElectroTrend\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\ETL_ElectroTrend\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
