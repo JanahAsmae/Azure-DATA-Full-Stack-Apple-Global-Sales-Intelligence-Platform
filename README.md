@@ -149,3 +149,35 @@ Les mesures suivantes ont été créées :
 - Revenue by Region
 - Channel Performance
 
+**Analyses métier réalisées**
+Le dashboard permet de répondre à plusieurs questions business.
+
+- Analyse de la performance géographique des ventes : Quel pays génère le plus de revenu ?
+- Comparaison des ventes entre produits Apple selon les régions : Quelle catégorie domine par région ?
+- Comparaison Online vs Retail vs Partner : Quel canal est le plus performant ?
+- Analyse de l’impact des discounts sur les ventes : Les remises augmentent-elles le volume ?
+- Comparaison entre 'Consumer', 'Corporate' et 'Education' : Quel segment client est le plus rentable ?
+- Identification des périodes de forte vente : Analyse saisonnière
+- Identification des produits avec le plus de retours : Taux de retour par produit
+
+### Installation / Utilisation
+
+**1- Cloner le projet**
+```
+git clone https://github.com/JanahAsmae/Azure-DATA-Full-Stack-Apple-Global-Sales-Intelligence-Platform.git
+```
+**2- Charger le dataset**
+
+Uploader le fichier CSV dans Azure Blob Storage.
+
+**3- Exécuter le pipeline Data Factory**
+- Lancer le pipeline d’ingestion
+- Déclencher le package SSIS
+
+**4- Charger le modèle dans SQL Server**
+
+Créer les tables Star Schema.
+
+**5- Ouvrir Power BI**
+
+Importer le fichier : dashboard.pbix
