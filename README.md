@@ -187,3 +187,18 @@ Créer les tables Star Schema.
 **5- Ouvrir Power BI**
 
 Importer le fichier : dashboard.pbix
+
+## Technologies utilisées
+### Cloud
+- Microsoft Azure
+
+### Data Engineering
+- Azure Blob Storage
+- Azure Data Factory
+- SSIS
+
+### Data Warehouse
+- SQL Server
+
+### Data Visualization
+- Power BI
