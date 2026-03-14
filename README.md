@@ -138,6 +138,7 @@ Chargement
 Un modèle en étoile (Star Schema) a été créé dans SQL Server.
 
 **Table de faits**: Fact_Sales
+
 **Tables de dimensions**: Dim_Date, Dim_Product, Dim_Geography, Dim_Channel, DimCustomerSegment
 
 
